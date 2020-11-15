@@ -1,6 +1,5 @@
 import json
 import sqlite3
-from playsound import playsound
 from flask import Flask, request, current_app, g, jsonify
 from flask_restful import Resource, Api
 
@@ -11,7 +10,7 @@ class Test(Resource):
 
 app = Flask(__name__)
 api = Api(app)
-api.add_resource(Test, '/cardmaker')
+api.add_resource(Test, '/test')
 
 @app.after_request
 def after_request(response):
