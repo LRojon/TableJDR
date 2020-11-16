@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/dhtmlx/suite.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Table JDR</title>
+</head>
+<body class="bg-dark fluid-container" style="overflow-x: hidden;">
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="font-size: 25px;">
+                <a class="navbar-brand" href="#"><i class="fal fa-dice-d20" style="font-size: 50px;"></i></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" id="#map">Carte</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="#mob">Créature</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="#pj">Joueur</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="#">About</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Outils</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" onclick="tools('nomevolue')" target="blank">Générateur de nom</a>
+                                <a class="dropdown-item" onclick="tools('ville')" target="blank">Générateur de ville</a>
+                                <a class="dropdown-item" onclick="tools('aubergedetail')" target="blank">Générateur d'auberge</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="">Separated link</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6"><i class="fas fa-dice-d20"></i></div>
+        <div class="col-3"></div>
+    </div>
+</body>
+<!-- -------------------- Modal -------------------- -->
+<div id="tools" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content border-info">
+            <iframe id="toolsFrame" src="" frameborder="0" style="height: 768px; width: 100%;"></iframe>
+        </div>
+    </div>
+</div>
+<script>
+    $(".nav-link").click(function(){
+        if(!$(this).hasClass('dropdown-toggle'))
+        {
+            removeActive();
+            $(this).parent().addClass('active');
+        }
+    })
+    function removeActive()
+    {
+        $(".nav-item").removeClass('active');
+    }
+
+    function tools(tool)
+    {
+        $("#toolsFrame").attr("src", "https://www.generation-jdr.fr/index.php?page=" + tool)
+        $("#tools").modal("show")
+    }
+</script>
+</html>
