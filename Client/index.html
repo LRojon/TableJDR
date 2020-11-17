@@ -3,18 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="js/dhtmlx/suite.css">
     <script src="js/dhtmlx/suite.js"></script>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.js"></script>
+    <style>
+        .text-gray
+        {
+            color: grey;
+        }
+    </style>
+
     <title>Table JDR</title>
 </head>
 <body class="bg-dark fluid-container" style="overflow-x: hidden;">
     <div class="row">
         <div class="col-12">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="font-size: 25px;">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-size: 25px;">
                 <a class="navbar-brand" href="#"><i class="fal fa-dice-d20" style="font-size: 50px;"></i></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,16 +32,13 @@
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" id="#map">Carte</a>
+                            <a class="nav-link" id="link-map">Carte</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="#mob">Créature</a>
+                            <a class="nav-link" id="link-mob">Créature</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="#pj">Joueur</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="#">About</a>
+                            <a class="nav-link" id="link-pj">Joueur</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Outils</a>
@@ -45,18 +51,50 @@
                             </div>
                         </li>
                     </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                    </form>
                 </div>
             </nav>
         </div>
     </div>
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6"><i class="fas fa-dice-d20"></i></div>
-        <div class="col-3"></div>
+
+    <div class="row marginTop text-light">
+
+        <div class="col-2">
+            <div class="text-center" style="position: fixed; height: 100%; padding: 5px">
+                <div id="tree-map"></div>
+                <div id="tree-mob"></div>
+            </div>
+        </div>
+
+        <div class="col-8 text-center">
+            <div class="row" id="map">
+                <div class="col-12">
+                    <p>Carte</p> <br>
+                    <img src="https://via.placeholder.com/800x600"> <br>
+                    <img src="https://via.placeholder.com/800x600">
+                </div>
+            </div>
+
+            <div class="row" id="mob">
+                <div class="col-12">
+                    <p>Créature</p> <br>
+                    <img src="https://via.placeholder.com/800x600">
+                </div>
+            </div>
+
+            <div class="row" id="pj">
+                <div class="col-12">
+                    <p>Joueur</p> <br>
+                    <img src="https://via.placeholder.com/800x600">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-2">
+            <div class="text-center" style="position: fixed; height: 100%; padding: 5px">
+                test-right
+            </div>
+        </div>
     </div>
 </body>
 <!-- -------------------- Modal -------------------- -->
@@ -67,7 +105,12 @@
         </div>
     </div>
 </div>
+<script src="js/script.js"></script>
 <script>
+    $("#mob").fadeOut(0);
+    $("#pj").fadeOut(0);
+    $("#tree-mob").fadeOut(0);
+
     $(".nav-link").click(function(){
         if(!$(this).hasClass('dropdown-toggle'))
         {
@@ -85,5 +128,33 @@
         $("#toolsFrame").attr("src", "https://www.generation-jdr.fr/index.php?page=" + tool)
         $("#tools").modal("show")
     }
+
+    $("[id|=link").click(function(){
+        $("#map").fadeOut(0);
+        $("#mob").fadeOut(0);
+        $("#pj").fadeOut(0);
+        $("#tree-map").fadeOut(0);
+        $("#tree-mob").fadeOut(0);
+
+        $("#" + $(this).attr("id").replace("link-", "")).fadeIn(500);
+        $("#tree-" + $(this).attr("id").replace("link-", "")).fadeIn(500);
+    })
+
+    let treeMap = new dhx.Tree("tree-map", {
+        editable: false,
+        keyNavigation: false,
+        data: obj,
+        checkbox: false,
+        isFolder: function(item)
+        {
+            return typeof item.items !== 'undefined'
+        },
+        css: "text-gray",
+        icon: {
+            folder: "fas fa-folder",
+            openFolder: "fas fa-folder-open",
+            file: "fas fa-map"
+        }
+    })
 </script>
 </html>
