@@ -5,20 +5,16 @@
 
 /* #501e38 */
 
-.dhx_tree-list-item__text{
+.dhx_tree-folder:hover>*>*, .dhx_tree-folder:hover>*, .dhx_tree-list-item:hover>*>*, .dhx_tree-list-item:hover>* {
+    color: #501e38;
+}
+
+.dhx_tree-list-item__icon, .dhx_tree-list-item__text, .dhx_tree-toggle-button{
     color: lightgray;
 }
 
-.dhx_tree-toggle-button{
-    color: lightgray;
-}
-
-.dhx_tree-list-item__icon{
-    color: lightgray;
-}
-
-.dhx_tree-folder--selected, .dhx_tree-list-item--selected{
-    background-color: #501e38;
+.dhx_tree-folder--selected>*>*, .dhx_tree-folder--selected>*, .dhx_tree-list-item--selected>*>*{
+    color: #501e38;
 }
 
 /**{

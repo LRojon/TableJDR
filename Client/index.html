@@ -59,9 +59,10 @@
     <div class="row marginTop text-light">
 
         <div class="col-2">
-            <div class="text-center" style="position: fixed; height: 100%; padding: 5px">
+            <div class="text-center" style="position: fixed; height: 100%; padding: 5px;">
                 <div id="tree-map"></div>
                 <div id="tree-mob"></div>
+                <div id="tree-pj"></div>
             </div>
         </div>
 
@@ -92,7 +93,8 @@
 
         <div class="col-2">
             <div class="text-center" style="position: fixed; height: 100%; padding: 5px">
-                test-right
+                <div id="right-map">map</div>
+                <div id="right-timeline">timeline</div>
             </div>
         </div>
     </div>
@@ -106,55 +108,4 @@
     </div>
 </div>
 <script src="js/script.js"></script>
-<script>
-    $("#mob").fadeOut(0);
-    $("#pj").fadeOut(0);
-    $("#tree-mob").fadeOut(0);
-
-    $(".nav-link").click(function(){
-        if(!$(this).hasClass('dropdown-toggle'))
-        {
-            removeActive();
-            $(this).parent().addClass('active');
-        }
-    })
-    function removeActive()
-    {
-        $(".nav-item").removeClass('active');
-    }
-
-    function tools(tool)
-    {
-        $("#toolsFrame").attr("src", "https://www.generation-jdr.fr/index.php?page=" + tool)
-        $("#tools").modal("show")
-    }
-
-    $("[id|=link").click(function(){
-        $("#map").fadeOut(0);
-        $("#mob").fadeOut(0);
-        $("#pj").fadeOut(0);
-        $("#tree-map").fadeOut(0);
-        $("#tree-mob").fadeOut(0);
-
-        $("#" + $(this).attr("id").replace("link-", "")).fadeIn(500);
-        $("#tree-" + $(this).attr("id").replace("link-", "")).fadeIn(500);
-    })
-
-    let treeMap = new dhx.Tree("tree-map", {
-        editable: false,
-        keyNavigation: false,
-        data: obj,
-        checkbox: false,
-        isFolder: function(item)
-        {
-            return typeof item.items !== 'undefined'
-        },
-        css: "text-gray",
-        icon: {
-            folder: "fas fa-folder",
-            openFolder: "fas fa-folder-open",
-            file: "fas fa-map"
-        }
-    })
-</script>
 </html>
