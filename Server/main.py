@@ -1,19 +1,15 @@
 import json
-import sqlite3
 from flask import Flask, request, current_app, g, jsonify
 from flask_restful import Resource, Api
+
+from API.DAO import DAO
+
 
 app = Flask(__name__)
 api = Api(app)
 
-@app.after_request
-def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers',
-                            'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods',
-                            'GET,PUT,POST,DELETE,OPTIONS')
-    return response
+api.add_resource(DAO, '/DAO/<command>')
+
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port='5002')
