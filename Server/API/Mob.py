@@ -10,21 +10,38 @@ class Mob(Resource):
             att = []
             values = []
             data = request.json['data']
-            for i in data.keys():
-                att.append(i)
-                values.append(data[i])
-            att.append("parent")
-            values.append(1)
-            str_att = ""
-            str_values = ""
-            for i in range(len(att)):
-                str_att = str_att + str(att[i]) + ","
-                str_values = str_values + "?,"
-            str_att = str_att[:-1]
-            str_values = str_values[:-1]
-            req = "INSERT INTO Mob (" + str_att + \
-                ") VALUES(" + str_values + ");"
-            dao.execute(req, values)
+            id = data["id"]
+            if id == -1:
+                data.pop("id")
+                for i in data.keys():
+                    att.append(i)
+                    values.append(data[i])
+                if not("parent" in data.keys()):
+                    att.append("parent")
+                    values.append(1)
+                str_att = ""
+                str_values = ""
+                for i in range(len(att)):
+                    str_att = str_att + str(att[i]) + ","
+                    str_values = str_values + "?,"
+                str_att = str_att[:-1]
+                str_values = str_values[:-1]
+                req = "INSERT INTO Mob (" + str_att + \
+                    ") VALUES(" + str_values + ");"
+                dao.execute(req, values)
+            else:
+                for i in data.keys():
+                    att.append(i)
+                    values.append(data[i])
+                if not("parent" in data.keys()):
+                    att.append("parent")
+                    values.append(1)
+                str_att = ""
+                for i in range(len(att)):
+                    str_att = str_att + str(att[i]) + "=?,"
+                str_att = str_att[:-1]
+                req = "UPDATE Mob SET " + str_att + " WHERE id="+str(id)+";"
+                dao.execute(req, values)
             return {"code": 200}
         elif command == "getonebyid":
             result = dao.select(
