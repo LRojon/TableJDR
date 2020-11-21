@@ -46,8 +46,7 @@
                                 <a class="dropdown-item" onclick="tools('nomevolue')" target="blank">Générateur de nom</a>
                                 <a class="dropdown-item" onclick="tools('ville')" target="blank">Générateur de ville</a>
                                 <a class="dropdown-item" onclick="tools('aubergedetail')" target="blank">Générateur d'auberge</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="">Separated link</a>
+                                <a class="dropdown-item" onclick="tools('perso')" target="blank">Bibliothèque de sort</a>
                             </div>
                         </li>
                     </ul>
@@ -76,10 +75,7 @@
             </div>
 
             <div class="row" id="mob">
-                <div class="col-12">
-                    <p>Créature</p> <br>
-                    <img src="https://via.placeholder.com/800x600">
-                </div>
+                
             </div>
 
             <div class="row" id="pj">
@@ -98,14 +94,15 @@
             </div>
         </div>
     </div>
-</body>
-<!-- -------------------- Modal -------------------- -->
-<div id="tools" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content border-info">
-            <iframe id="toolsFrame" src="" frameborder="0" style="height: 768px; width: 100%;"></iframe>
+    <!-- -------------------- Modal -------------------- -->
+    <div id="tools" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content border-info">
+                <iframe id="toolsFrame" src="" frameborder="0" style="height: 768px; width: 100%;"></iframe>
+            </div>
         </div>
     </div>
-</div>
+</body>
+<script src="js/class/mob.js"></script>
 <script src="js/script.js"></script>
 </html>
