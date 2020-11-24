@@ -17,6 +17,17 @@
     color: #501e38;
 }
 
-/**{
-    border: solid black 1px;
-}*/
+.timeline
+{
+    border-radius: 25%; 
+    margin: 10px; 
+    width: 40%; 
+    border: dashed 4px #e95420;
+}
+.timeline-active
+{
+    border-radius: 25%; 
+    margin: 10px; 
+    width: 40%; 
+    border: solid 4px #e95420; /*#208820;*/
+}

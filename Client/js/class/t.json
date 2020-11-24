@@ -1,106 +1,37 @@
-// Get All
-
-// Return
-{
-    "code": 200,
-    "data": [
-        {
-            "id": 1,
-            "name": "Gobelin",
-            "token": "/file/mob/Gobelin.png",
-            "pv": "2;6;0",
-            "xp": 50,
-            "for": 8,
-            "dex": 14,
-            "con": 10,
-            "int": 10,
-            "sag": 8,
-            "cha": 8,
-            "danger": "1/4",
-            "sense": "Vision dans le noir 18 m, Perception passive 9",
-            "save": "0;0;0;0;0;0",
-            "speed": "9 m",
-            "ac": 15,
-            "type_ac": "armure de cuir, bouclier",
-            "skill": "Discrétion +6",
-            "action": "<strong><i>Arc court</i></strong>. <i>Attaque d'arme à distance</i> : +4 pour toucher, portée 24/96 m, une cible.<br><i>Touché</i> : 5 (1d6+2) dégâts perforants.<br><br><strong><i>Cimeterre</i></strong>. <i>Attaque d'arme au corps à corps</i> : +4 pour toucher, allonge 1,50 m, une cible.<br><i>Touché</i> : 5 (1d6+2) dégâts tranchants.",
-            "capacities": "<strong><i>Fuite agile</i></strong>. Le gobelin peut effectuer l'action se désengager ou se cacher par une action bonus à chacun de ses tours."
-        },
-        {
-            "another_mob": ""
-        }
-    ]
-}
-
-// GetOneById
-
-// Return
-{
-    "code": 200,
-    "data": {
-        "id": 1,
-        "name": "Gobelin",
-        "token": "/file/mob/Gobelin.png",
-        "pv": "2;6;0",
-        "xp": 50,
-        "for": 8,
-        "dex": 14,
-        "con": 10,
-        "int": 10,
-        "sag": 8,
-        "cha": 8,
-        "danger": "1/4",
-        "sense": "Vision dans le noir 18 m, Perception passive 9",
-        "save": "0;0;0;0;0;0",
-        "speed": "9 m",
-        "ac": 15,
-        "type_ac": "armure de cuir, bouclier",
-        "skill": "Discrétion +6",
-        "action": "<strong><i>Arc court</i></strong>. <i>Attaque d'arme à distance</i> : +4 pour toucher, portée 24/96 m, une cible.<br><i>Touché</i> : 5 (1d6+2) dégâts perforants.<br><br><strong><i>Cimeterre</i></strong>. <i>Attaque d'arme au corps à corps</i> : +4 pour toucher, allonge 1,50 m, une cible.<br><i>Touché</i> : 5 (1d6+2) dégâts tranchants.",
-        "capacities": "<strong><i>Fuite agile</i></strong>. Le gobelin peut effectuer l'action se désengager ou se cacher par une action bonus à chacun de ses tours."
+[
+    {
+        "value": "Créatures / Joueurs / Cartes",
+        "id": 0,
+        "opened": true, // Le premier doit avoir l'attribut opened à true
+        "items": [
+            {
+                "value": "Nom dossier",
+                "id": 1,
+                "items": [
+                    {
+                        "id": 1,
+                        "value": "Nom créatures / Joueurs / Cartes",
+                    },
+                    {
+                        "id": 2,
+                        "value": "un autre élément ou folder"
+                    }
+                ]
+            },
+            {
+                "value": "Un autre dossier",
+                "id": 2,
+                "items": [
+                    {
+                        "value": "Un autre élément ou folder",
+                        "id": 3
+                    },
+                    {
+                        "value": "Un autre élément ou folder",
+                        "id": 4
+                    }
+                ]
+            }
+        ]
     }
-}
-
-// SetById
-
-// Send
-
-{
-    "id": 1,
-    "name": "Gobelin",
-    "token": "/file/mob/Gobelin.png",
-    "pv": "2;6;0",
-    "xp": 50,
-    "for": 8,
-    "dex": 14,
-    "con": 10,
-    "int": 10,
-    "sag": 8,
-    "cha": 8,
-    "danger": "1/4",
-    "sense": "Vision dans le noir 18 m, Perception passive 9",
-    "save": "0;0;0;0;0;0",
-    "speed": "9 m",
-    "ac": 15,
-    "type_ac": "armure de cuir, bouclier",
-    "skill": "Discrétion +6",
-    "action": "<strong><i>Arc court</i></strong>. <i>Attaque d'arme à distance</i> : +4 pour toucher, portée 24/96 m, une cible.<br><i>Touché</i> : 5 (1d6+2) dégâts perforants.<br><br><strong><i>Cimeterre</i></strong>. <i>Attaque d'arme au corps à corps</i> : +4 pour toucher, allonge 1,50 m, une cible.<br><i>Touché</i> : 5 (1d6+2) dégâts tranchants.",
-    "capacities": "<strong><i>Fuite agile</i></strong>. Le gobelin peut effectuer l'action se désengager ou se cacher par une action bonus à chacun de ses tours."
-}
-
-// Return
-{
-    "code": 200
-}
-
-// Delete By Id
-
-// Send
-{
-    "id": 1
-}
-
-//Return
-{
-    "code": 200
-}
+]

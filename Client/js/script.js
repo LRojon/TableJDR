@@ -22,52 +22,6 @@ let map = [
     }
 ]
 
-let ArboMob = [
-    {
-        value: "Créatures",
-        id: "root",
-        opened: true,
-        items: [
-            {
-                value: "Gobelinoïde",
-                id: "f1",
-                items: [
-                    {
-                        id: "1",
-                        value: "Gobelin",
-                    },
-                    {
-                        id: "2",
-                        value: "Gobelin archer",
-                    },
-                    {
-                        value: "Orc",
-                        id: "t3"
-                    }
-                ]
-            },
-            {
-                value: "Humain",
-                id: "f2",
-                items: [
-                    {
-                        value: "Bandit",
-                        id: "t4"
-                    },
-                    {
-                        value: "Garde",
-                        id: "t5"
-                    },
-                    {
-                        value: "Mage",
-                        id: "t6"
-                    }
-                ]
-            }
-        ]
-    }
-]
-
 let pj = [
     {
         value: "Joueurs",
@@ -133,6 +87,7 @@ let ambiance = [
 // Init
 
 let mobs = new Mobs();
+let currentTimelineId = null;
 
 $("#mob").fadeOut(0);
 $("#pj").fadeOut(0);
@@ -140,6 +95,51 @@ $("#tree-mob").fadeOut(0);
 $("#tree-pj").fadeOut(0);
 $("#right-timeline").fadeOut(0);
 
+let ArboMob = [
+    {
+        value: "Créatures",
+        id: "root",
+        opened: true,
+        items: [
+            {
+                value: "Gobelinoïde",
+                id: "f1",
+                items: [
+                    {
+                        id: "1",
+                        value: "Gobelin",
+                    },
+                    {
+                        id: "2",
+                        value: "Gobelin archer",
+                    },
+                    {
+                        value: "Orc",
+                        id: "t3"
+                    }
+                ]
+            },
+            {
+                value: "Humain",
+                id: "f2",
+                items: [
+                    {
+                        value: "Bandit",
+                        id: "t4"
+                    },
+                    {
+                        value: "Garde",
+                        id: "t5"
+                    },
+                    {
+                        value: "Mage",
+                        id: "t6"
+                    }
+                ]
+            }
+        ]
+    }
+]
 
 let treeMap = new dhx.Tree("tree-map", {
     data: map,
@@ -182,6 +182,60 @@ let treeMob = new dhx.Tree("tree-mob", {
         file: "fas fa-dragon"
     }
 })
+
+let arrayTimeLine = [
+    {
+        id: "Gobelin-1",
+        name: "Gobelin 1",
+        token: 'file/mob/Gobelin.png',
+        init: (Math.floor(Math.random() * 1000) % 20 + 1) + 2,
+        ac: 15,
+    },
+    {
+        id: "Gobelin-2",
+        name: "Gobelin 2",
+        token: 'file/mob/Gobelin.png',
+        init: (Math.floor(Math.random() * 1000) % 20 + 1) + 2,
+        ac: 15,
+    },
+    {
+        id: "Gobelin-3",
+        name: "Gobelin 3",
+        token: 'file/mob/Gobelin.png',
+        init: (Math.floor(Math.random() * 1000) % 20 + 1) + 2,
+        ac: 15,
+    },
+    {
+        id: "Gobelin_archer-1",
+        name: "Gobelin archer 1",
+        token: 'file/mob/Gobelin archer.png',
+        init: (Math.floor(Math.random() * 1000) % 20 + 1) + 2,
+        ac: 15,
+    },
+    {
+        id: "Gobelin_archer-2",
+        name: "Gobelin archer 2",
+        token: 'file/mob/Gobelin archer.png',
+        init: (Math.floor(Math.random() * 1000) % 20 + 1) + 2,
+        ac: 15,
+    },
+    {
+        id: "Gobelin_archer-3",
+        name: "Gobelin archer 3",
+        token: 'file/mob/Gobelin archer.png',
+        init: (Math.floor(Math.random() * 1000) % 20 + 1) + 2,
+        ac: 15,
+    },
+    {
+        id: "Gobelin_archer-4",
+        name: "Gobelin archer 4",
+        token: 'file/mob/Gobelin archer.png',
+        init: (Math.floor(Math.random() * 1000) % 20 + 1) + 2,
+        ac: 15,
+    }
+]
+
+let timeLine = new TimeLine();
 
 // Fonction
 
@@ -230,16 +284,29 @@ treeMob.events.on("ItemDblClick", function(id){
 
     let mob = mobs.GetMobById(id);
     mob.Generate();
-    let elem = $("[id|=" + mob.name.replace(' ', '_') + "]").last();
+
+    let tag = $('[id |="' + mob.name.replace(' ', '_') + '"]:not([id$="timeline"');
+    let elem = tag.last();
+    let num = null;
     if(elem.length == 0)
-    {
-        $("#mob").append(mob.GetCard(0))
-    }
+        num = 1;
     else
-    {
-        console.log(elem);
-        $("#mob").append(mob.GetCard(parseInt(elem.attr("id").replace(mob.name + "-", "")) + 1));
-    }
+        num = parseInt(elem.attr("id").replace(mob.name.replace(' ', '_') + "-", "")) + 1;
+    
+    $("#mob").append(mob.GetCard(num));
+
+    timeLine.AddMob(
+        mob.name.replace(' ', '_') + '-' + num,
+        mob.name + ' ' + num,
+        mob.token,
+        mob.init,
+        mob.ac
+    );
+    $("#right-timeline").html(timeLine.GetTimeLine())
+});
+
+$("#fight").click(function() {
+    timeLineNext();
 });
 
 $("body").on("change", ".mobInput", function(){
@@ -249,5 +316,48 @@ $("body").on("change", ".mobInput", function(){
         $("#" + id).fadeOut(1000, function(){
             $("#" + id).remove();
         });
+        $("#" + id + "-timeline").fadeOut(1000, function(){
+            $("#" + id + "-timeline").remove();
+            timeLine.RemoveMob(id);
+        })
     }
 });
+
+$("body").keyup(function (e) { 
+    if(e.keyCode == 32)
+    {
+        if($('.nav-item.active>a').attr("id") != 'link-map')
+        {
+            timeLineNext()
+        }
+    }
+});
+
+function timeLineNext()
+{
+    if(timeLine.array.length != 0)
+    {
+        if($(".timeline-active").length == 0)
+        {
+            $("#right-timeline").html(timeLine.GetTimeLine(0));
+            $("#fight").html("Suivant");
+        }
+        else
+        {
+            let x = $('#' + timeLine.array[1].id + '-timeline').position().top - $('#' + timeLine.array[0].id + '-timeline').position().top;
+            $('div[id$="-timeline"').animate({
+                top: "-=" + x,
+            }, 400)
+            $('#' + timeLine.array[0].id + '-timeline').fadeOut(0, function(){
+                let tmp = timeLine.array[0];
+                timeLine.array.shift();
+                timeLine.array.push(tmp);
+                $("#right-timeline").html(timeLine.GetTimeLine(0));
+            });
+        }
+    }
+    else
+    {
+        $("#fight").html("Commencer");
+    }
+}
