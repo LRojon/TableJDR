@@ -1,3 +1,4 @@
+import subprocess
 from flask import Flask, request, current_app, g, jsonify
 from flask_restful import Resource
 
@@ -12,10 +13,17 @@ class DAO(Resource):
         elif command == "changeDB":
             dao.changeDB(request.json['profil'])
             return {"code": 200}
-        elif command == "getall":
+        elif command == "getAllData":
             result = {}
             tables = ["Folder", "Character", "Map", "Mob", "Ambiance"]
             for t in tables:
                 result[t] = dao.select("SELECT * FROM " + t)
+            return {"code": 200, "data": result}
+        elif command == "getAllProfil":
+            profileStr = subprocess.check_output("ls ./db", shell=True)
+            profileStr = profileStr.decode("utf-8")
+            profileStr = profileStr[10:]
+            result = profileStr.replace(".db", "").split('\n')
+            result.pop()
             return {"code": 200, "data": result}
         return {"code": "404"}
