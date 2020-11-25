@@ -7,6 +7,7 @@ from utils.DAO_Object import dao
 
 class DAO(Resource):
     def post(self, command):
+        request.get_json(force=True)
         if command == "create":
             dao.__init__(request.json['profil'])
             return {"code": 200}
