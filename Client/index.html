@@ -25,7 +25,7 @@
     <div class="row">
         <div class="col-12">
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="font-size: 25px;">
-                <a class="navbar-brand" href="#"><i class="fal fa-dice-d20" style="font-size: 50px;"></i></a>
+                <a class="navbar-brand"><i class="fal fa-dice-d20" style="font-size: 50px;"></i></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -49,6 +49,12 @@
                                 <a class="dropdown-item" onclick="tools('aubergedetail')" target="blank">Générateur d'auberge</a>
                                 <a class="dropdown-item" onclick="tools('perso')" target="blank">Bibliothèque de sort</a>
                             </div>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <select class="form-control-lg bg-dark text-light border-dark" id="profils"></select>
+                            <button id="createProfil" class="btn btn-lg btn-dark"><i class="fas fa-plus"></i></button>
                         </li>
                     </ul>
                 </div>
@@ -93,16 +99,53 @@
 
         <div class="col-2">
             <div class="text-center marginTop" style="position: fixed; top: 0; bottom: 0; padding: 5px; overflow-x: hidden;">
-                <div id="right-map">map</div>
+                <div id="right-map">Ambiance</div>
                 <div id="right-timeline" class="row text-center justify-content-center"></div>
             </div>
         </div>
     </div>
+
     <!-- -------------------- Modal -------------------- -->
+
     <div id="tools" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content border-info">
+            <div class="modal-content bg-dark border-info">
                 <iframe id="toolsFrame" src="" frameborder="0" style="height: 768px; width: 100%;"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="createProfilModal" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content bg-dark text-light border-info">
+                <div class="modal-header">
+                    Nouveau profil
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="newProfil" class="form-control">
+                    <br>
+                    <div class="text-center"><button id="newProfilBtn" class="btn btn-primary">Créer</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="initProfil" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content bg-dark border-secondary text-light">
+                <div class="modal-header">
+                    Choisir un profil
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <select class="form-control" id="initProfils"></select>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <button id="profilChoice" class="btn btn-primary">Choisir</button>
+                        <button id="createProfilP" class="btn btn-primary">Créer</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

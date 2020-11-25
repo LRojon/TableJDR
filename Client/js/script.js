@@ -84,10 +84,21 @@ let ambiance = [
     }
 ]
 
+let profils = ["Zelkior", "Slooby", "CVC"]
 // Init
 
 let mobs = new Mobs();
+let timeLine = new TimeLine();
 let currentTimelineId = null;
+let profil = null
+
+profils.forEach(elem => {
+    let append = "<option value='" + elem + "'>" + elem + "</option>";
+    $("#initProfils").append(append)
+    $("#profils").append(append)
+});
+$("#initProfil").modal("show");
+$("#newProfil").val('');
 
 $("#mob").fadeOut(0);
 $("#pj").fadeOut(0);
@@ -235,8 +246,6 @@ let arrayTimeLine = [
     }
 ]
 
-let timeLine = new TimeLine();
-
 // Fonction
 
 $(".nav-link").click(function(){
@@ -361,3 +370,32 @@ function timeLineNext()
         $("#fight").html("Commencer");
     }
 }
+
+$("#profilChoice").click(function(){
+    profil = $("#initProfils").val();
+    $("#profils").val(profil);
+    $("#initProfil").modal("hide");
+});
+
+$("#profils").change(function(){
+    console.log($(this).val());
+});
+
+$("#createProfil").click(function(){
+    $("#createProfilModal").modal("show")
+});
+$("#createProfilP").click(function(){
+    $("#initProfil").modal("hide");
+    $("#createProfilModal").modal("show");
+    $("#createProfilModal").attr("data-backdrop", "static");
+});
+
+$("#newProfilBtn").click(function(){
+    input = $("#newProfil");
+    if(input.val())
+    {
+        let xhr = XMLHttpRequest();
+        xhr.responseType = "json";
+        xhr.open("POST", "http://127.0.0.1/DAO/create");
+    }
+});
