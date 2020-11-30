@@ -83,8 +83,6 @@ let ambiance = [
         name: "Forêt - Nuit"
     }
 ]
-
-let profils = ["Zelkior", "Slooby", "CVC"]
 // Init
 
 let mobs = new Mobs();
@@ -92,11 +90,7 @@ let timeLine = new TimeLine();
 let currentTimelineId = null;
 let profil = null
 
-profils.forEach(elem => {
-    let append = "<option value='" + elem + "'>" + elem + "</option>";
-    $("#initProfils").append(append)
-    $("#profils").append(append)
-});
+initProfils();
 $("#initProfil").modal("show");
 $("#newProfil").val('');
 
@@ -371,19 +365,62 @@ function timeLineNext()
     }
 }
 
+function initProfils()
+{
+    let xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+    xhr.open("POST", "http://127.0.0.1:5002/DAO/getAllProfil");
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState == 4 && xhr.status == 200)
+        {
+            if(xhr.response.code == 200)
+            {
+                let profils = xhr.response.data;
+                profils.forEach(elem => {
+                    let append = "<option value='" + elem + "'>" + elem + "</option>";
+                    $("#initProfils").append(append)
+                    $("#profils").append(append)
+                });
+            }
+        }
+    }
+    if(profil == null)
+        xhr.send();
+}
+
 $("#profilChoice").click(function(){
     profil = $("#initProfils").val();
-    $("#profils").val(profil);
-    $("#initProfil").modal("hide");
+    if(profil)
+    {
+        $("#profils").val(profil);
+        $("#initProfil").modal("hide");
+    }
 });
 
 $("#profils").change(function(){
-    console.log($(this).val());
+    let xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+    xhr.onload = function(){
+        if(xhr.readyState == 4 && xhr.status == 200)
+        {
+            if(xhr.response.code == 200)
+            {
+                // Get Arbo Map
+                // Get Arbo Mob
+                // Get Arbo Character
+
+                // Set All Arbo
+                // Set Profil
+            }
+        }
+    }
+    xhr.send()
 });
 
 $("#createProfil").click(function(){
     $("#createProfilModal").modal("show")
 });
+
 $("#createProfilP").click(function(){
     $("#initProfil").modal("hide");
     $("#createProfilModal").modal("show");
@@ -391,11 +428,29 @@ $("#createProfilP").click(function(){
 });
 
 $("#newProfilBtn").click(function(){
-    input = $("#newProfil");
-    if(input.val())
+    input = $("#newProfil").val();
+    console.log({
+        "profil": input.trim()
+    });
+    if(input.trim() != "")
     {
-        let xhr = XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
         xhr.responseType = "json";
-        xhr.open("POST", "http://127.0.0.1/DAO/create");
+        xhr.open("POST", "http://127.0.0.1:5002/DAO/create");
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 && xhr.status == 200)
+            {
+                if(xhr.response.code == 200)
+                {
+                    profil = input.trim();
+                    initProfils();
+                    // Function same Profils Change
+                    $("#createProfilModal").modal("hide")
+                }
+            }
+        }
+        xhr.send(JSON.stringify({
+            "profil": input.trim()
+        }));
     }
 });

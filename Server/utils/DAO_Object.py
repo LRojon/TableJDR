@@ -15,11 +15,13 @@ class DAO_Object:
     def create(self):
         req = "CREATE TABLE Folder(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, type TEXT NOT NULL, parent INTEGER)"
         self.cur.execute(req)
+        req = "INSERT INTO Folder(id,name,type) VALUES(0,'Joueurs','Character'),(1,'Créatures','Mob'),(2,'Cartes','Map')"
+        self.cur.execute(req)
         req = "CREATE TABLE Character(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, pv INTEGER NOT NULL, ac INTEGER NOT NULL, perception INTEGER NOT NULL, for INTGER NOT NULL, dex INTEGER NOT NULL, con INTEGER NOT NULL, int INTEGER NOT NULL, sag INTEGER NOT NULL, cha INTEGER NOT NULL, speed INTEGER NOT NULL, parent INTEGER)"
         self.cur.execute(req)
         req = "CREATE TABLE Mob(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, token TEXT NOT NULL, pv INTEGER NOT NULL, xp INTEGER NOT NULL, for INTGER NOT NULL, dex INTEGER NOT NULL, con INTEGER NOT NULL, int INTEGER NOT NULL, sag INTEGER NOT NULL, cha INTEGER NOT NULL, danger TEXT NOT NULL, sense TEXT NOT NULL, save TEXT NOT NULL, speed TEXT NOT NULL, ac INTEGER NOT NULL, type_ac TEXT NOT NULL, skill TEXT NOT NULL, action TEXT NOT NULL, capacities TEXT NOT NULL, parent INTEGER)"
         self.cur.execute(req)
-        req = "CREATE TABLE Map(id INTEGER PRIMARY KEY AUTOINCREMENT, image TEXT NOT NULL,  ambiance_id INTEGER NOT NULL, parent INTEGER)"
+        req = "CREATE TABLE Map(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, image TEXT NOT NULL,  ambiance_id INTEGER NOT NULL, note TEXT, parent INTEGER)"
         self.cur.execute(req)
         req = "CREATE TABLE Ambiance(id INTEGER PRIMARY KEY AUTOINCREMENT, music TEXT NOT NULL,  mode TEXT NOT NULL, color TEXT NOT NULL)"
         self.cur.execute(req)
