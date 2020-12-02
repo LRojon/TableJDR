@@ -131,7 +131,9 @@ class Mobs
     constructor()
     {
         this.array = [];
-        // AJAX Mob
+        let xhr = new XMLHttpRequest();
+        xhr.responseType = "json";
+        
 
         this.array.push(new Mob(1, 'Gobelin', 'file/mob/Gobelin.png', '2;6;0', 50, 8, 14, 10, 10, 8, 8, '1/4',
         'Vision dans le noir 18 m, Perception passive 9', '0;0;0;0;0;0', '9 m', 15, 'armure de cuir, bouclier', 'Discretion +6',
