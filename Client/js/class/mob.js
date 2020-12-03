@@ -130,11 +130,24 @@ class Mobs
 {
     constructor()
     {
-        this.array = [];
+        let tmpArray = [];
         let xhr = new XMLHttpRequest();
         xhr.responseType = "json";
-        
+        xhr.open("POST", "http://127.0.0.1:5002/Mob/getall");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200)
+            {
+                xhr.response.data.forEach(elem => {
+                    tmpArray.push(new Mob(elem.id, elem.name, elem.token, elem.pv, elem.xp,
+                        elem.for, elem.dex, elem.con, elem.int, elem.sag, elem.cha, elem.danger, elem.sense,
+                    elem.save, elem.speed, elem.ac, elem.type_ac, elem.skill, elem.action, elem.capacities))
+                });
+            }
+        }
+        xhr.send()
+        this.array = tmpArray;
 
+        /*
         this.array.push(new Mob(1, 'Gobelin', 'file/mob/Gobelin.png', '2;6;0', 50, 8, 14, 10, 10, 8, 8, '1/4',
         'Vision dans le noir 18 m, Perception passive 9', '0;0;0;0;0;0', '9 m', 15, 'armure de cuir, bouclier', 'Discretion +6',
         '<b><i>Arc court</i></b>. <i>Attaque d\'arme à distance</i> : +4 pour toucher, portée 24/96 m, une cible.<br><i>Touché</i> : 5 (1d6+2) dégâts perforants.<br><br><b><i>Cimeterre</i></b>. <i>Attaque d\'arme au corps à corps</i> : +4 pour toucher, allonge 1,50 m, une cible.<br><i>Touché</i> : 5 (1d6+2) dégâts tranchants.',
@@ -143,6 +156,7 @@ class Mobs
         'Vision dans le noir 18 m, Perception passive 9', '0;0;0;0;0;0', '9 m', 15, 'armure de cuir, bouclier', 'Discretion +6',
         '<b><i>Arc court</i></b>. <i>Attaque d\'arme à distance</i> : +4 pour toucher, portée 24/96 m, une cible.<br><i>Touché</i> : 5 (1d6+2) dégâts perforants.<br><br><b><i>Cimeterre</i></b>. <i>Attaque d\'arme au corps à corps</i> : +4 pour toucher, allonge 1,50 m, une cible.<br><i>Touché</i> : 5 (1d6+2) dégâts tranchants.',
         '<b><i>Fuite agile</i></b>. Le gobelin peut effectuer l\'action se désengager ou se cacher par une action bonus à chacun de ses tours.'));
+        */
     }
 
     GetMobById(id)

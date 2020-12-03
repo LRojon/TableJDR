@@ -1,4 +1,4 @@
-let map = [
+let arboMap = [
     {
         value: "Cartes",
         id: "root",
@@ -21,8 +21,7 @@ let map = [
         ]
     }
 ]
-
-let pj = [
+let arboCharacter = [
     {
         value: "Joueurs",
         id: "root",
@@ -69,18 +68,6 @@ let pj = [
                 ]
             }
         ]
-    }
-]
-
-let ambiance = [
-    {
-        name: "Caverne"
-    },
-    {
-        name: "Forêt - Jour"
-    },
-    {
-        name: "Forêt - Nuit"
     }
 ]
 // Init
@@ -147,7 +134,7 @@ let ArboMob = [
 ]
 
 let treeMap = new dhx.Tree("tree-map", {
-    data: map,
+    data: arboMap,
     isFolder: function(item)
     {
         return typeof item.items !== 'undefined'
@@ -160,8 +147,8 @@ let treeMap = new dhx.Tree("tree-map", {
     }
 })
 
-let treePC = new dhx.Tree("tree-pj", {
-    data: pj,
+let treeCharacter = new dhx.Tree("tree-pj", {
+    data: arboCharacter,
     isFolder: function(item)
     {
         return typeof item.items !== 'undefined'
@@ -394,27 +381,12 @@ $("#profilChoice").click(function(){
     {
         $("#profils").val(profil);
         $("#initProfil").modal("hide");
+        loadProfil(profil);
     }
 });
 
 $("#profils").change(function(){
-    let xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-    xhr.onload = function(){
-        if(xhr.readyState == 4 && xhr.status == 200)
-        {
-            if(xhr.response.code == 200)
-            {
-                // Get Arbo Map
-                // Get Arbo Mob
-                // Get Arbo Character
-
-                // Set All Arbo
-                // Set Profil
-            }
-        }
-    }
-    xhr.send()
+    loadProfil($(this).val())
 });
 
 $("#createProfil").click(function(){
@@ -442,9 +414,8 @@ $("#newProfilBtn").click(function(){
             {
                 if(xhr.response.code == 200)
                 {
-                    profil = input.trim();
                     initProfils();
-                    // Function same Profils Change
+                    loadProfil(input.trim())
                     $("#createProfilModal").modal("hide")
                 }
             }
@@ -454,3 +425,49 @@ $("#newProfilBtn").click(function(){
         }));
     }
 });
+
+function loadProfil(profilToChange) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://127.0.0.1:5002/DAO/changeDB")
+    xhr.responseType = 'json';
+    xhr.onload = function(){
+        if(xhr.readyState == 4 && xhr.status == 200)
+        {
+            if(xhr.response.code == 200)
+            {
+                // Get Arbo Map
+                // Get Arbo Character
+                
+                
+                let xhrMob = new XMLHttpRequest();
+                xhrMob.open("POST", "http://127.0.0.1:5002/Tree/getTree");
+                xhrMob.responseType = "json"
+                xhrMob.onreadystatechange = function () {
+                    if (xhrMob.readyState == 4 && xhrMob.status == 200)
+                    {
+                        console.log(xhrMob.response.data);
+                        treeMob.data.parse(xhrMob.response.data);
+                    }
+                }
+                xhrMob.send(JSON.stringify({ type: "Mob" }))
+                profil = profilToChange
+
+                // Set All Arbo
+                // Set Profil
+            }
+        }
+    }
+    xhr.send(JSON.stringify({ profil: profilToChange }))
+}
+
+function exportToJsonFile(jsonData) {
+    let dataStr = JSON.stringify(jsonData);
+    let dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+
+    let exportFileDefaultName = 'data.json';
+
+    let linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+}
